@@ -1,86 +1,139 @@
-# Resource Management Project
+# 🏢 Resource Management System
 
-A full-stack resource management application consisting of a Spring Boot backend and a React-based dashboard frontend. This project allows for efficient tracking, allocation, and maintenance of various organizational resources.
+[![Spring Boot](https://img.shields.io/badge/Spring--Boot-3.4.2-brightgreen?logo=spring)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-18.x-blue?logo=react)](https://react.dev/)
+[![Java](https://img.shields.io/badge/Java-17%2B-orange?logo=openjdk)](https://www.oracle.com/java/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 🚀 Features
+A robust, enterprise-ready full-stack application designed for managing organizational resources across Classrooms and Faculty offices. Built with a focus on ease of use, maintainability, and real-time synchronization.
 
-- **Full CRUD Operations**: Create, Read, Update, and Delete resources.
-- **Advanced Filtering**: Filter resources by type, status, and search functionality.
-- **Data Seeding**: Automatically populates the database with initial sample data on startup.
-- **Responsive Dashboard**: A modern UI for managing resources at a glance.
-- **H2 Database**: Persistent file-based storage using Spring Data JPA.
+---
 
-## 🛠 Project Structure
+## 📸 Overview
 
-- `ResourceManagmentBackend/`: Spring Boot Java application handling the REST API and data persistence.
-- `Resource Management Dashboard/`: Vite + React + Tailwind CSS frontend application.
+The **Resource Management System** provides a centralized dashboard to monitor, track, and manage physical resources (printers, projectors, computers, etc.). It bridges the gap between hardware tracking and administrative allocation.
 
-## 💻 Tech Stack
+### ✨ Key Features
 
-### Backend
-- **Java 17+**
-- **Spring Boot 3.x**
-- **Spring Data JPA** (Hibernate)
-- **H2 Database**
-- **Maven**
+- **🎯 Resource Tracking**: Real-time status Monitoring (`WORKING`, `NON_WORKING`).
+- **📍 Smart Allocation**: Detailed allocation logic for `FACULTY` and `CLASSROOM` types.
+- **🔍 Advanced Filtering**: Multi-parameter search by resource type, status, and name.
+- **📊 Maintenance Logging**: Track maintenance cycles and purchase history.
+- **🛡️ Production Ready**: CORS enabled, H2 persistent storage, and auto-seeding.
 
-### Frontend
-- **React 18**
-- **Vite**
-- **Tailwind CSS**
-- **Radix UI**
-- **Lucide Icons**
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+graph TD
+    User((User))
+    SubGraph1[Frontend - React Dashboard]
+    SubGraph2[Backend - Spring Boot REST API]
+    DB[(H2 Database)]
+
+    User <--> SubGraph1
+    SubGraph1 <-->|REST API / JSON| SubGraph2
+    SubGraph2 <-->|Spring Data JPA| DB
+```
+
+### � Project Structure
+
+```text
+Lap/
+├── README.md                           # Main Documentation
+├── ResourceManagmentBackend/           # Java Spring Boot Service
+│   └── src/
+│       ├── main/java/com/aayush/...   # Business Logic & REST Controllers
+│       └── main/resources/             # Configuration & DB Settings
+└── Resource Management Dashboard/      # React Frontend
+    └── src/
+        ├── components/                 # UI Components (Radix UI)
+        └── data/                       # Mock data & interfaces
+```
+
+---
+
+## �️ Tech Stack
+
+| Component | Technology | Role |
+| :--- | :--- | :--- |
+| **Frontend** | React, Vite | Reactive UI & Dev Workflow |
+| **Styling** | Tailwind CSS | Modern Responsive Design |
+| **State** | React Hooks | Component-level State |
+| **API** | Spring Web | RESTful Endpoint Exposure |
+| **Persistence**| Spring Data JPA | Object-Relational Mapping |
+| **Database** | H2 (File-based) | High-speed Local Development |
+
+---
 
 ## 🚦 Getting Started
 
-### Prerequisites
-- Node.js & npm
-- Java JDK 17 or higher
-- Maven (or use the included `mvnw`)
+### 📋 Prerequisites
+- **Node.js** (v18+)
+- **JDK 17** or higher
+- **Maven** (optional, wrapper included)
+
+### 🔧 Installation & Launch
+
+#### 1. Backend Setup
+```powershell
+cd ResourceManagmentBackend
+./mvnw.cmd spring-boot:run
+```
+> [!NOTE]
+> On first run, the system will automatically seed the database with sample data defined in `DataLoader.java`.
+
+#### 2. Frontend Setup
+```powershell
+cd "Resource Management Dashboard"
+npm install
+npm run dev
+```
+The application will launch at [http://localhost:5173](http://localhost:5173).
 
 ---
 
-### Running the Backend
+## 📖 API Reference
 
-1. Navigate to the backend directory:
-   ```powershell
-   cd ResourceManagmentBackend
-   ```
-2. Build and run the application:
-   ```powershell
-   ./mvnw.cmd spring-boot:run
-   ```
-   The backend will start on `http://localhost:8080`.
-   - **H2 Console**: Accessible at `http://localhost:8080/h2-console`
-   - **API Base URL**: `http://localhost:8080/api/resources`
+All API calls should be prefixed with `/api/resources`.
 
-### Running the Frontend
-
-1. Navigate to the frontend directory:
-   ```powershell
-   cd "Resource Management Dashboard"
-   ```
-2. Install dependencies:
-   ```powershell
-   npm install
-   ```
-3. Start the development server:
-   ```powershell
-   npm run dev
-   ```
-   The dashboard will be available at `http://localhost:5173`.
-
----
-
-## 📖 API Documentation
+### Endpoints
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `GET` | `/api/resources` | List all resources (supports `type`, `status`, `search` query params) |
-| `GET` | `/api/resources/{id}` | Get a single resource by ID |
-| `POST` | `/api/resources` | Create a new resource |
-| `PUT` | `/api/resources/{id}` | Update an existing resource |
-| `DELETE` | `/api/resources/{id}` | Delete a resource |
+| `GET` | `/` | Retrieve all resources (supports type/status/search filters) |
+| `GET` | `/{id}` | Fetch specific resource details |
+| `POST` | `/` | Register a new organizational resource |
+| `PUT` | `/{id}` | Update existing resource metadata |
+| `DELETE`| `/{id}` | Remove a resource from the system |
 
-## 🔗 Design
-The original project design is based on this [Figma Design](https://www.figma.com/design/TnFYZLTBebSy3FyIyPIinc/Resource-Management-Dashboard).
+### Sample Payload (JSON)
+```json
+{
+  "name": "EPSON L3250",
+  "type": "PRINTER",
+  "allocationType": "FACULTY",
+  "status": "WORKING",
+  "allocatedTo": "CS Department",
+  "purchaseDate": "2024-02-23"
+}
+```
+
+---
+
+## 🤝 Contributing
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+Designed with ❤️ for efficiency.
