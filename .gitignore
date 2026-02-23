@@ -1,0 +1,21 @@
+# Root .gitignore for fullstack project
+
+# Backend
+ResourceManagmentBackend/target/
+ResourceManagmentBackend/.mvn/wrapper/maven-wrapper.jar
+ResourceManagmentBackend/HELP.md
+ResourceManagmentBackend/data/
+
+# Frontend
+Resource Management Dashboard/node_modules/
+Resource Management Dashboard/dist/
+Resource Management Dashboard/.vite/
+
+# Common
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.DS_Store
+*.log
